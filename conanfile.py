@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMakeDeps, CMake, cmake_layout
+from conan.tools.scm import Git
 
 
 class gameRecipe(ConanFile):
@@ -14,6 +15,10 @@ class gameRecipe(ConanFile):
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*"
+
+    def export(self):
+        git = Git(self, self.recipe_folder)
+        git.coordinates_to_conandata()
 
     def generate(self):
         tc = CMakeToolchain(self)
